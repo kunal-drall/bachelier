@@ -1,0 +1,28 @@
+{
+  "name": "@bachelier/shared",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Shared types, Black-Scholes TS mirror, event decoders, network config, zod schemas",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./bs": "./src/bs.ts",
+    "./fp": "./src/fp.ts",
+    "./events": "./src/events.ts",
+    "./networks": "./src/networks.ts",
+    "./dto": "./src/dto.ts"
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "lint": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@stacks/transactions": "^7.2.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.0",
+    "vitest": "^3.2.0"
+  }
+}

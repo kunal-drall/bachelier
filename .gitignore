@@ -1,0 +1,35 @@
+# deps
+node_modules/
+.pnpm-store/
+
+# build outputs
+dist/
+build/
+.turbo/
+*.tsbuildinfo
+
+# env / secrets
+.env
+.env.local
+.env.*.local
+*.pem
+keeper/.keys/
+
+# clarinet
+contracts/.cache/
+contracts/history.txt
+contracts/costs-reports.json
+contracts/coverage/
+contracts/.coverage/
+contracts/lcov.info
+
+# logs
+*.log
+logs/
+
+# editor/os
+.DS_Store
+.idea/
+.vscode/
+contracts/settings/Testnet.toml
+contracts/settings/Mainnet.toml

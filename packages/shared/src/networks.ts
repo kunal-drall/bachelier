@@ -1,0 +1,125 @@
+/**
+ * Network-keyed deployment config. Devnet principals are the Clarinet
+ * defaults; testnet/mainnet principals are filled in at deploy time (the
+ * deployed addresses are recorded here, per spec section 9).
+ */
+
+export type BachelierNetwork = "devnet" | "testnet" | "mainnet";
+
+export interface NetworkConfig {
+  network: BachelierNetwork;
+  stacksApiUrl: string;
+  /** principal that deployed the Bachelier contracts */
+  deployer: string;
+  contracts: {
+    bsMath: string;
+    oracleAdapter: string;
+    bcshareToken: string;
+    vault: string;
+  };
+  tokens: {
+    /** SIP-010 sBTC contract id (mock on devnet) */
+    sbtc: string;
+    /** SIP-010 USDC contract id (mock on devnet) */
+    usdc: string;
+    sbtcDecimals: number;
+    usdcDecimals: number;
+  };
+  pyth: {
+    /** Pyth BTC/USD price feed id */
+    btcUsdFeedId: string;
+    /** price feed contract (mock on devnet) */
+    feedContract: string;
+  };
+}
+
+const DEVNET_DEPLOYER = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM";
+
+export const NETWORKS: Record<BachelierNetwork, NetworkConfig> = {
+  devnet: {
+    network: "devnet",
+    stacksApiUrl: "http://localhost:3999",
+    deployer: DEVNET_DEPLOYER,
+    contracts: {
+      bsMath: `${DEVNET_DEPLOYER}.bs-math`,
+      oracleAdapter: `${DEVNET_DEPLOYER}.oracle-adapter`,
+      bcshareToken: `${DEVNET_DEPLOYER}.bcshare-token`,
+      vault: `${DEVNET_DEPLOYER}.vault`,
+    },
+    tokens: {
+      sbtc: `${DEVNET_DEPLOYER}.sbtc-token`,
+      usdc: `${DEVNET_DEPLOYER}.usdc-token`,
+      sbtcDecimals: 8,
+      usdcDecimals: 6,
+    },
+    pyth: {
+      btcUsdFeedId: "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43",
+      feedContract: `${DEVNET_DEPLOYER}.pyth-mock`,
+    },
+  },
+  testnet: {
+    network: "testnet",
+    stacksApiUrl: "https://api.testnet.hiro.so",
+    // Filled in at deploy time (see deployments/default.testnet-plan.yaml).
+    // Override via env BACHELIER_DEPLOYER for ad-hoc deployments.
+    deployer: process.env.BACHELIER_DEPLOYER ?? "ST000000000000000000002AMW42H",
+    contracts: {
+      bsMath: addr("bs-math"),
+      oracleAdapter: addr("oracle-adapter"),
+      bcshareToken: addr("bcshare-token"),
+      vault: addr("vault"),
+    },
+    tokens: {
+      // Hiro testnet sBTC; USDC is a project-deployed mock until a canonical
+      // testnet USDC exists. Set via env in deployed services.
+      sbtc: process.env.BACHELIER_SBTC ?? "ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT.sbtc-token",
+      usdc: process.env.BACHELIER_USDC ?? addr("usdc-token"),
+      sbtcDecimals: 8,
+      usdcDecimals: 6,
+    },
+    pyth: {
+      btcUsdFeedId: "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43",
+      feedContract: process.env.BACHELIER_PRICE_FEED ?? addr("pyth-mock"),
+    },
+  },
+  mainnet: {
+    network: "mainnet",
+    stacksApiUrl: "https://api.hiro.so",
+    deployer: process.env.BACHELIER_DEPLOYER ?? "SP000000000000000000002Q6VF78",
+    contracts: {
+      bsMath: addr("bs-math"),
+      oracleAdapter: addr("oracle-adapter"),
+      bcshareToken: addr("bcshare-token"),
+      vault: addr("vault"),
+    },
+    tokens: {
+      sbtc: "SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token",
+      usdc: process.env.BACHELIER_USDC ?? addr("usdc-token"),
+      sbtcDecimals: 8,
+      usdcDecimals: 6,
+    },
+    pyth: {
+      btcUsdFeedId: "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43",
+      feedContract: process.env.BACHELIER_PRICE_FEED ?? addr("pyth-mock"),
+    },
+  },
+};
+
+function addr(contract: string): string {
+  const deployer = process.env.BACHELIER_DEPLOYER ?? "ST000000000000000000002AMW42H";
+  return `${deployer}.${contract}`;
+}
+
+export function getNetworkConfig(network: string | undefined): NetworkConfig {
+  const n = (network ?? "devnet") as BachelierNetwork;
+  const cfg = NETWORKS[n];
+  if (!cfg) throw new Error(`unknown network: ${network}`);
+  return cfg;
+}
+
+/** Split "SP....contract-name" into [address, name]. */
+export function splitContractId(id: string): [string, string] {
+  const [address, name] = id.split(".");
+  if (!address || !name) throw new Error(`bad contract id: ${id}`);
+  return [address, name];
+}
