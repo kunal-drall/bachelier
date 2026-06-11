@@ -5,6 +5,8 @@
 # back to the branch encrypted with .github/deploy-key.pub.pem (the matching
 # private key never enters the repo). The public deployment record and the
 # shared network config are committed back in the same push.
+#
+# Uses only GitHub-authored actions; pnpm comes from corepack.
 name: deploy-testnet
 
 on:
@@ -28,12 +30,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: pnpm
+
+      - name: Enable pnpm via corepack
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.33.0 --activate
+          pnpm --version
 
       - name: Install
         run: pnpm install --frozen-lockfile
