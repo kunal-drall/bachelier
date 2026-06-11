@@ -1,0 +1,27 @@
+{
+  "name": "@bachelier/keeper",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Round-lifecycle worker: starts and settles weekly rounds (the only server-side signer)",
+  "type": "module",
+  "scripts": {
+    "build": "tsc --noEmit",
+    "lint": "tsc --noEmit",
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@bachelier/shared": "workspace:*",
+    "@stacks/network": "^7.2.0",
+    "@stacks/transactions": "^7.2.0",
+    "fastify": "^5.3.0",
+    "node-cron": "^4.2.0",
+    "tsx": "^4.20.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.0",
+    "typescript": "^5.8.0",
+    "vitest": "^3.2.0"
+  }
+}

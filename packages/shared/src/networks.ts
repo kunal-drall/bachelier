@@ -35,6 +35,14 @@ export interface NetworkConfig {
 
 const DEVNET_DEPLOYER = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM";
 
+/** browser-safe env lookup (vite injects import.meta.env, node has process) */
+function env(key: string): string | undefined {
+  if (typeof process !== "undefined" && typeof process.env === "object") {
+    return process.env[key];
+  }
+  return undefined;
+}
+
 export const NETWORKS: Record<BachelierNetwork, NetworkConfig> = {
   devnet: {
     network: "devnet",
@@ -62,7 +70,7 @@ export const NETWORKS: Record<BachelierNetwork, NetworkConfig> = {
     stacksApiUrl: "https://api.testnet.hiro.so",
     // Filled in at deploy time (see deployments/default.testnet-plan.yaml).
     // Override via env BACHELIER_DEPLOYER for ad-hoc deployments.
-    deployer: process.env.BACHELIER_DEPLOYER ?? "ST000000000000000000002AMW42H",
+    deployer: env("BACHELIER_DEPLOYER") ?? "ST000000000000000000002AMW42H",
     contracts: {
       bsMath: addr("bs-math"),
       oracleAdapter: addr("oracle-adapter"),
@@ -72,20 +80,20 @@ export const NETWORKS: Record<BachelierNetwork, NetworkConfig> = {
     tokens: {
       // Hiro testnet sBTC; USDC is a project-deployed mock until a canonical
       // testnet USDC exists. Set via env in deployed services.
-      sbtc: process.env.BACHELIER_SBTC ?? "ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT.sbtc-token",
-      usdc: process.env.BACHELIER_USDC ?? addr("usdc-token"),
+      sbtc: env("BACHELIER_SBTC") ?? "ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT.sbtc-token",
+      usdc: env("BACHELIER_USDC") ?? addr("usdc-token"),
       sbtcDecimals: 8,
       usdcDecimals: 6,
     },
     pyth: {
       btcUsdFeedId: "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43",
-      feedContract: process.env.BACHELIER_PRICE_FEED ?? addr("pyth-mock"),
+      feedContract: env("BACHELIER_PRICE_FEED") ?? addr("pyth-mock"),
     },
   },
   mainnet: {
     network: "mainnet",
     stacksApiUrl: "https://api.hiro.so",
-    deployer: process.env.BACHELIER_DEPLOYER ?? "SP000000000000000000002Q6VF78",
+    deployer: env("BACHELIER_DEPLOYER") ?? "SP000000000000000000002Q6VF78",
     contracts: {
       bsMath: addr("bs-math"),
       oracleAdapter: addr("oracle-adapter"),
@@ -94,19 +102,19 @@ export const NETWORKS: Record<BachelierNetwork, NetworkConfig> = {
     },
     tokens: {
       sbtc: "SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token",
-      usdc: process.env.BACHELIER_USDC ?? addr("usdc-token"),
+      usdc: env("BACHELIER_USDC") ?? addr("usdc-token"),
       sbtcDecimals: 8,
       usdcDecimals: 6,
     },
     pyth: {
       btcUsdFeedId: "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43",
-      feedContract: process.env.BACHELIER_PRICE_FEED ?? addr("pyth-mock"),
+      feedContract: env("BACHELIER_PRICE_FEED") ?? addr("pyth-mock"),
     },
   },
 };
 
 function addr(contract: string): string {
-  const deployer = process.env.BACHELIER_DEPLOYER ?? "ST000000000000000000002AMW42H";
+  const deployer = env("BACHELIER_DEPLOYER") ?? "ST000000000000000000002AMW42H";
   return `${deployer}.${contract}`;
 }
 

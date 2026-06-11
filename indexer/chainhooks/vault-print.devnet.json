@@ -1,0 +1,22 @@
+{
+  "chain": "stacks",
+  "uuid": "bachelier-vault-print-devnet",
+  "name": "Bachelier vault print events (devnet)",
+  "version": 1,
+  "networks": {
+    "devnet": {
+      "if_this": {
+        "scope": "print_event",
+        "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.vault",
+        "contains": "e"
+      },
+      "then_that": {
+        "http_post": {
+          "url": "http://host.docker.internal:4001/chainhook/events",
+          "authorization_header": "Bearer dev-chainhook-secret"
+        }
+      },
+      "decode_clarity_values": true
+    }
+  }
+}

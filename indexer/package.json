@@ -1,0 +1,27 @@
+{
+  "name": "@bachelier/indexer",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Chainhook consumer: projects Bachelier vault events into Postgres",
+  "type": "module",
+  "scripts": {
+    "build": "tsc --noEmit",
+    "lint": "tsc --noEmit",
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@bachelier/db": "workspace:*",
+    "@bachelier/shared": "workspace:*",
+    "drizzle-orm": "^0.44.0",
+    "fastify": "^5.3.0",
+    "tsx": "^4.20.0"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.3.0",
+    "@stacks/transactions": "^7.4.0",
+    "typescript": "^5.8.0",
+    "vitest": "^3.2.0"
+  }
+}

@@ -1,0 +1,84 @@
+# Local stack: Postgres + indexer + API (+ keeper, profile-gated).
+# The Clarinet devnet runs alongside via `cd contracts && clarinet devnet start`
+# (see README "Local development") -- it provides the Stacks node on :3999
+# and the chainhook service that posts events to the indexer.
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: bachelier
+      POSTGRES_PASSWORD: bachelier
+      POSTGRES_DB: bachelier
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bachelier"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  indexer:
+    build:
+      context: .
+      dockerfile: docker/service.Dockerfile
+      args:
+        SERVICE: indexer
+    environment:
+      DATABASE_URL: postgres://bachelier:bachelier@postgres:5432/bachelier
+      STACKS_NETWORK: ${STACKS_NETWORK:-devnet}
+      STACKS_API_URL: ${STACKS_API_URL:-http://host.docker.internal:3999}
+      CHAINHOOK_SECRET: ${CHAINHOOK_SECRET:-dev-chainhook-secret}
+      INDEXER_PORT: "4001"
+      BACKFILL_ON_START: ${BACKFILL_ON_START:-true}
+    ports:
+      - "4001:4001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  api:
+    build:
+      context: .
+      dockerfile: docker/service.Dockerfile
+      args:
+        SERVICE: api
+    environment:
+      DATABASE_URL: postgres://bachelier:bachelier@postgres:5432/bachelier
+      STACKS_NETWORK: ${STACKS_NETWORK:-devnet}
+      STACKS_API_URL: ${STACKS_API_URL:-http://host.docker.internal:3999}
+      API_PORT: "4000"
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:5173}
+    ports:
+      - "4000:4000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  # opt-in: docker compose --profile keeper up
+  keeper:
+    profiles: ["keeper"]
+    build:
+      context: .
+      dockerfile: docker/service.Dockerfile
+      args:
+        SERVICE: keeper
+    environment:
+      STACKS_NETWORK: ${STACKS_NETWORK:-devnet}
+      STACKS_API_URL: ${STACKS_API_URL:-http://host.docker.internal:3999}
+      KEEPER_PRIVATE_KEY: ${KEEPER_PRIVATE_KEY:?set KEEPER_PRIVATE_KEY in .env}
+      KEEPER_PORT: "4002"
+      PRICE_RELAY: ${PRICE_RELAY:-true}
+      PRICE_SOURCE_URL: ${PRICE_SOURCE_URL:-}
+    ports:
+      - "4002:4002"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  pgdata:

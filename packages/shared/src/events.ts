@@ -181,12 +181,12 @@ export function decodePrintHex(hex: string): Record<string, PlainValue> {
   return plain as Record<string, PlainValue>;
 }
 
-const big = (v: PlainValue): bigint => {
+const big = (v: unknown): bigint => {
   if (typeof v === "bigint") return v;
   if (typeof v === "string" || typeof v === "number") return BigInt(v);
   throw new Error(`expected bigint-able value, got ${typeof v}`);
 };
-const str = (v: PlainValue): string => {
+const str = (v: unknown): string => {
   if (typeof v !== "string") throw new Error(`expected string, got ${typeof v}`);
   return v;
 };
@@ -195,7 +195,7 @@ const str = (v: PlainValue): string => {
  * Map a decoded print tuple to a typed VaultEvent.
  * Returns null for tuples that are not Bachelier events (no `e` key).
  */
-export function toVaultEvent(plain: Record<string, PlainValue>): VaultEvent | null {
+export function toVaultEvent(plain: Record<string, unknown>): VaultEvent | null {
   const e = plain["e"];
   if (typeof e !== "string") return null;
   switch (e) {
