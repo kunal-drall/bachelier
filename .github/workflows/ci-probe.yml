@@ -1,0 +1,10 @@
+name: ci-probe
+on:
+  push:
+    paths:
+      - ".deploy-testnet-trigger"
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "actions runner works"
