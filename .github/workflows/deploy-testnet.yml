@@ -9,6 +9,11 @@ name: deploy-testnet
 
 on:
   workflow_dispatch: {}
+  # the session's GitHub credential cannot dispatch workflows, so a push to
+  # this marker file is the programmatic trigger (workflow pushes never touch it)
+  push:
+    paths:
+      - ".deploy-testnet-trigger"
 
 permissions:
   contents: write
