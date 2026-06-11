@@ -33,3 +33,7 @@ logs/
 .vscode/
 contracts/settings/Testnet.toml
 contracts/settings/Mainnet.toml
+
+# testnet deployer wallet (testnet-only key, never commit)
+contracts/settings/.testnet-deployer.json
+.deploy-key.pem

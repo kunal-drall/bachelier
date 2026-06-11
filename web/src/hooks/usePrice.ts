@@ -1,14 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import { fetchPrice } from "../lib/api";
+import { chainPrice } from "../lib/chainRead";
 
 export type PriceTick = "up" | "down" | "flat";
 
-/** Live BTC price; polls every 30s. Tracks tick direction vs previous value. */
+/** Live BTC price (API, falling back to the on-chain feed); polls every 30s. */
 export function usePrice() {
   const query = useQuery({
     queryKey: ["price"],
-    queryFn: ({ signal }) => fetchPrice(signal),
+    queryFn: ({ signal }) => fetchPrice(signal).catch(() => chainPrice()),
     refetchInterval: 30_000,
     staleTime: 5_000,
   });

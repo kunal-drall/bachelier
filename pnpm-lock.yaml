@@ -69,12 +69,21 @@ importers:
       '@hirosystems/clarinet-sdk':
         specifier: ^3.6.1
         version: 3.8.1
+      '@stacks/network':
+        specifier: ^7.3.1
+        version: 7.3.1
       '@stacks/transactions':
         specifier: ^7.2.0
+        version: 7.4.0
+      '@stacks/wallet-sdk':
+        specifier: ^7.4.0
         version: 7.4.0
       chokidar-cli:
         specifier: ^3.0.0
         version: 3.0.0
+      tsx:
+        specifier: ^4.22.4
+        version: 4.22.4
       typescript:
         specifier: ^5.8.0
         version: 5.9.3
@@ -1326,14 +1335,26 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@scure/base@1.1.9':
+    resolution: {integrity: sha512-8YKhl8GHiNI/pU2VMaofa2Tor7PJRAjwQLBBuilkJ9L5+13yVbC7JO/wS7piioAvPSwR3JKM1IJ/u4xQzbcXKg==}
+
   '@scure/base@1.2.6':
     resolution: {integrity: sha512-g/nm5FgUa//MCj1gV09zTJTaM6KBAHqLN907YVQqf7zC49+DcO4B1so4ZX07Ef10Twr6nuqYEH9GEggFXA4Fmg==}
+
+  '@scure/bip32@1.1.3':
+    resolution: {integrity: sha512-dSH3+LCWONlSNQuF34xZrG6Xas7tp2jSSqHb/pMfXWM0vKE4JZOtK3uJfoWouUVW5IGlls75HkXmYLldZ8ySgQ==}
 
   '@scure/bip32@1.7.0':
     resolution: {integrity: sha512-E4FFX/N3f4B80AKWp5dP6ow+flD1LQZo/w8UnLGYZO674jS6YnYeepycOOksv+vLPSpgN35wgKgy+ybfTb2SMw==}
 
+  '@scure/bip39@1.1.0':
+    resolution: {integrity: sha512-pwrPOS16VeTKg98dYXQyIjJEcWfz7/1YJIwxUEPFfQPtc86Ym/1sVgQ2RLoD43AazMk2l/unK4ITySSpW2+82w==}
+
   '@scure/bip39@1.6.0':
     resolution: {integrity: sha512-+lF0BbLiJNwVlev4eKelw1WWLaiKXw7sSl8T6FvBlWkdX+94aGJ4o8XjUdlyhTCjd8c+B3KT3JfS8P0bLRNU6A==}
+
+  '@stacks/auth@7.4.0':
+    resolution: {integrity: sha512-2nEPQuhJMifxX7YhuaI1Qn7D0Bjvdav3cmQQXF6PGA/MKIQniExhvHKhuGrshMaJ2OUui+lJxFWA8RCyJVd5ow==}
 
   '@stacks/clarinet-sdk-wasm@3.19.0':
     resolution: {integrity: sha512-5Y4VrMIExO4ja3z4XU271IuQfH5METddrUv9xS1hY1KLA3VtCIXmo/Q1/tr2fnRrwpwUETjAmFfLnxnn43/RqQ==}
@@ -1354,6 +1375,9 @@ packages:
   '@stacks/connect@8.2.6':
     resolution: {integrity: sha512-MXkMVIDPPQLlL83UKb3rNdm7Gh/LQGdPhSsq+sL36KCM6qM1by8+igxX/R/5G+rgn6KdCG+iIRTh4TkAqntrTg==}
 
+  '@stacks/encryption@7.4.0':
+    resolution: {integrity: sha512-jrxgHui3P8M2o2sXs01cAd9uJ6JrtB0g6BDBSKj6K40zvlBbEOiki4wXYQNC3g3AmO73Udv31EhCQrWZtwZspA==}
+
   '@stacks/network@6.17.0':
     resolution: {integrity: sha512-numHbfKjwco/rbkGPOEz8+FcJ2nBnS/tdJ8R422Q70h3SiA9eqk9RjSzB8p4JP8yW1SZvW+eihADHfMpBuZyfw==}
 
@@ -1363,11 +1387,17 @@ packages:
   '@stacks/profile@7.4.0':
     resolution: {integrity: sha512-1fJlYtV/mIwc6Mp63hchsebcoPL1So/6kba4uJHdd41DQk0U7zMIN6/QQ+BWF9nQfP8m7pWy5U+xAOLyYU5TMQ==}
 
+  '@stacks/storage@7.4.0':
+    resolution: {integrity: sha512-te94se3ZqucbU/O5p5uzl2gZSCD7p1W6mQLBFeM9LHA+VVCEnEMEK6sXoYEoiMl9EwicWnACUVIDlvHGZiPVFQ==}
+
   '@stacks/transactions@6.17.0':
     resolution: {integrity: sha512-FUah2BRgV66ApLcEXGNGhwyFTRXqX5Zco3LpiM3essw8PF0NQlHwwdPgtDko5RfrJl3LhGXXe/30nwsfNnB3+g==}
 
   '@stacks/transactions@7.4.0':
     resolution: {integrity: sha512-scsQO3rSNNKcPHp56Wy5OeZiIpQNmmZOORz8bkQKWjzvzycAodtSWmAoHiMFAKSleR1NyeRIz642fReqlZU9tw==}
+
+  '@stacks/wallet-sdk@7.4.0':
+    resolution: {integrity: sha512-c0F/DzB30GV0tQAfWvbfGEZmzyTPics286IV+XRafj2j7UKur2yvEh5m3ORd79+KWleIV4dbGjfXTJ3MEz2LGg==}
 
   '@stencil/core@4.43.5':
     resolution: {integrity: sha512-cgWD+GeuvJpTe1WQn40p02+BJ2j0j1YJ17GdkF2qKIQ23s2e3Zivq5yISXS3dcuV6oUJFN93jprdk+nk/sq99Q==}
@@ -2864,6 +2894,10 @@ packages:
 
   rfdc@1.4.1:
     resolution: {integrity: sha512-q1b3N5QkRUWUl7iyylaaj3kOpIT0N2i9MqIEQXP73GVsN9cw3fdx8X63cEmWhJGi2PPCF23Ijp7ktmd39rawIA==}
+
+  ripemd160-min@0.0.6:
+    resolution: {integrity: sha512-+GcJgQivhs6S9qvLogusiTcS9kQUfgR75whKuy5jIhuiOfQuJ8fjqxV6EGD5duH1Y/FawFUMtMhyeq3Fbnib8A==}
+    engines: {node: '>=8'}
 
   ripemd160@2.0.3:
     resolution: {integrity: sha512-5Di9UC0+8h1L6ZD2d7awM7E/T4uA1fJRlx6zk/NvdCCVEoAnFqvHmCuNeIKoCeIixBX/q8uM+6ycDvF8woqosA==}
@@ -4548,7 +4582,15 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.61.1':
     optional: true
 
+  '@scure/base@1.1.9': {}
+
   '@scure/base@1.2.6': {}
+
+  '@scure/bip32@1.1.3':
+    dependencies:
+      '@noble/hashes': 1.1.5
+      '@noble/secp256k1': 1.7.1
+      '@scure/base': 1.1.9
 
   '@scure/bip32@1.7.0':
     dependencies:
@@ -4556,10 +4598,27 @@ snapshots:
       '@noble/hashes': 1.8.0
       '@scure/base': 1.2.6
 
+  '@scure/bip39@1.1.0':
+    dependencies:
+      '@noble/hashes': 1.1.5
+      '@scure/base': 1.1.9
+
   '@scure/bip39@1.6.0':
     dependencies:
       '@noble/hashes': 1.8.0
       '@scure/base': 1.2.6
+
+  '@stacks/auth@7.4.0':
+    dependencies:
+      '@noble/secp256k1': 1.7.1
+      '@stacks/common': 7.3.1
+      '@stacks/encryption': 7.4.0
+      '@stacks/network': 7.3.1
+      '@stacks/profile': 7.4.0
+      cross-fetch: 3.2.0
+      jsontokens: 4.0.1
+    transitivePeerDependencies:
+      - encoding
 
   '@stacks/clarinet-sdk-wasm@3.19.0': {}
 
@@ -4626,6 +4685,17 @@ snapshots:
       - utf-8-validate
       - zod
 
+  '@stacks/encryption@7.4.0':
+    dependencies:
+      '@noble/hashes': 1.1.5
+      '@noble/secp256k1': 1.7.1
+      '@scure/bip39': 1.1.0
+      '@stacks/common': 7.3.1
+      base64-js: 1.5.1
+      bs58: 5.0.0
+      ripemd160-min: 0.0.6
+      varuint-bitcoin: 1.1.2
+
   '@stacks/network@6.17.0':
     dependencies:
       '@stacks/common': 6.16.0
@@ -4651,6 +4721,17 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
+  '@stacks/storage@7.4.0':
+    dependencies:
+      '@stacks/auth': 7.4.0
+      '@stacks/common': 7.3.1
+      '@stacks/encryption': 7.4.0
+      '@stacks/network': 7.3.1
+      base64-js: 1.5.1
+      jsontokens: 4.0.1
+    transitivePeerDependencies:
+      - encoding
+
   '@stacks/transactions@6.17.0':
     dependencies:
       '@noble/hashes': 1.1.5
@@ -4670,6 +4751,23 @@ snapshots:
       '@stacks/network': 7.3.1
       c32check: 2.0.0
       lodash.clonedeep: 4.5.0
+    transitivePeerDependencies:
+      - encoding
+
+  '@stacks/wallet-sdk@7.4.0':
+    dependencies:
+      '@scure/bip32': 1.1.3
+      '@scure/bip39': 1.1.0
+      '@stacks/auth': 7.4.0
+      '@stacks/common': 7.3.1
+      '@stacks/encryption': 7.4.0
+      '@stacks/network': 7.3.1
+      '@stacks/profile': 7.4.0
+      '@stacks/storage': 7.4.0
+      '@stacks/transactions': 7.4.0
+      c32check: 2.0.0
+      jsontokens: 4.0.1
+      zone-file: 2.0.0-beta.3
     transitivePeerDependencies:
       - encoding
 
@@ -5365,7 +5463,6 @@ snapshots:
   bs58@5.0.0:
     dependencies:
       base-x: 4.0.1
-    optional: true
 
   bs58@6.0.0:
     dependencies:
@@ -6548,6 +6645,8 @@ snapshots:
 
   rfdc@1.4.1: {}
 
+  ripemd160-min@0.0.6: {}
+
   ripemd160@2.0.3:
     dependencies:
       hash-base: 3.1.2
@@ -6878,7 +6977,6 @@ snapshots:
   varuint-bitcoin@1.1.2:
     dependencies:
       safe-buffer: 5.2.1
-    optional: true
 
   viem@2.31.0(typescript@5.9.3)(zod@3.25.76):
     dependencies:

@@ -28,6 +28,10 @@ class ApiError extends Error {
 }
 
 async function getJson(path: string, signal?: AbortSignal): Promise<unknown> {
+  if (!API_URL) {
+    // chain-direct mode: no REST API deployed; callers fall back to chainRead
+    throw new ApiError("api disabled");
+  }
   const url = `${API_URL}${path}`;
   let res: Response;
   try {

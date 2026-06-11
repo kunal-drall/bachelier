@@ -1,16 +1,17 @@
 import { useState } from "react";
-import { IS_DEVNET } from "../lib/config";
+import { FAUCET_ENABLED } from "../lib/config";
 import { useWallet } from "../hooks/useWallet";
 import { useToasts } from "./Toasts";
 import { faucetMint } from "../lib/stacks";
 
-/** Devnet-only faucet: mints 1 sBTC + 10,000 USDC to the connected wallet. */
+/** Mock-token faucet: mints 1 sBTC + 10,000 USDC to the connected wallet.
+ * Shown wherever the configured tokens are the project's open-mint mocks. */
 export default function FaucetButton() {
   const { address, connected } = useWallet();
   const { push, pushTx } = useToasts();
   const [busy, setBusy] = useState(false);
 
-  if (!IS_DEVNET || !connected || !address) return null;
+  if (!FAUCET_ENABLED || !connected || !address) return null;
 
   const onClick = async () => {
     setBusy(true);

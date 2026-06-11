@@ -78,9 +78,11 @@ export const NETWORKS: Record<BachelierNetwork, NetworkConfig> = {
       vault: addr("vault"),
     },
     tokens: {
-      // Hiro testnet sBTC; USDC is a project-deployed mock until a canonical
-      // testnet USDC exists. Set via env in deployed services.
-      sbtc: env("BACHELIER_SBTC") ?? "ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT.sbtc-token",
+      // Project-deployed SIP-010 mocks (open mint = faucet for testers); the
+      // deployed vault's token config points at these. Re-point to the real
+      // testnet sBTC / a canonical USDC via env + vault.set-tokens before
+      // accepting real deposits.
+      sbtc: env("BACHELIER_SBTC") ?? addr("sbtc-token"),
       usdc: env("BACHELIER_USDC") ?? addr("usdc-token"),
       sbtcDecimals: 8,
       usdcDecimals: 6,
