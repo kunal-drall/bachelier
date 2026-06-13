@@ -127,6 +127,31 @@ export function getNetworkConfig(network: string | undefined): NetworkConfig {
   return cfg;
 }
 
+/**
+ * Rebuild a network config with an explicit deployer principal. In our
+ * self-contained testnet deployment every contract/token/feed lives under the
+ * one deployer, so this derives the whole address set from it. Used by the web
+ * build (VITE_BACHELIER_DEPLOYER) and the services (BACHELIER_DEPLOYER) once
+ * the contracts are live -- this avoids relying on `process.env` at build time,
+ * which Vite strips from the browser bundle.
+ */
+export function configWithDeployer(network: BachelierNetwork, deployer: string): NetworkConfig {
+  const base = NETWORKS[network];
+  const a = (c: string) => `${deployer}.${c}`;
+  return {
+    ...base,
+    deployer,
+    contracts: {
+      bsMath: a("bs-math"),
+      oracleAdapter: a("oracle-adapter"),
+      bcshareToken: a("bcshare-token"),
+      vault: a("vault"),
+    },
+    tokens: { ...base.tokens, sbtc: a("sbtc-token"), usdc: a("usdc-token") },
+    pyth: { ...base.pyth, feedContract: a("pyth-mock") },
+  };
+}
+
 /** Split "SP....contract-name" into [address, name]. */
 export function splitContractId(id: string): [string, string] {
   const [address, name] = id.split(".");

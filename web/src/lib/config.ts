@@ -2,7 +2,7 @@
  * Runtime configuration derived from Vite env vars + shared network config.
  * All env access is centralised here so components never touch import.meta.env.
  */
-import { getNetworkConfig, type NetworkConfig } from "@bachelier/shared/networks";
+import { configWithDeployer, getNetworkConfig, type NetworkConfig } from "@bachelier/shared/networks";
 
 // production builds (e.g. the Vercel deployment) default to testnet with no
 // REST API -- the app then reads live state straight from the chain
@@ -17,8 +17,16 @@ export const NETWORK = (["devnet", "testnet", "mainnet"].includes(RAW_NETWORK) ?
 
 export const IS_DEVNET = NETWORK === "devnet";
 
-/** Network config (contract ids, token ids) from the shared package. */
-export const cfg: NetworkConfig = getNetworkConfig(NETWORK);
+/**
+ * Network config (contract ids, token ids). After deploying to testnet, set
+ * VITE_BACHELIER_DEPLOYER to the deployer principal so the build bakes in the
+ * live contract addresses (Vite strips process.env, so the shared env() helper
+ * can't see it at build time -- this Vite-native var is the override).
+ */
+const DEPLOYER_OVERRIDE = (import.meta.env.VITE_BACHELIER_DEPLOYER as string | undefined)?.trim();
+export const cfg: NetworkConfig = DEPLOYER_OVERRIDE
+  ? configWithDeployer(NETWORK, DEPLOYER_OVERRIDE)
+  : getNetworkConfig(NETWORK);
 
 /** Base URL for the read-only REST API; empty string = no API (chain-direct). */
 export const API_URL: string =
