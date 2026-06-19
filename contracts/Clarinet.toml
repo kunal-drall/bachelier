@@ -1,0 +1,55 @@
+[project]
+name = "bachelier"
+description = "Bachelier - peer-to-pool covered-call options vault on sBTC with on-chain Black-Scholes pricing"
+authors = ["kunal-drall"]
+telemetry = false
+cache_dir = "./.cache"
+
+[repl.analysis]
+passes = ["check_checker"]
+check_checker = { trusted_sender = true, trusted_caller = true, callee_filter = true }
+
+[contracts.sip-010-trait]
+path = "contracts/sip-010-trait.clar"
+clarity_version = 3
+epoch = "3.1"
+
+[contracts.sbtc-token]
+path = "contracts/mocks/sbtc-token.clar"
+clarity_version = 3
+epoch = "3.1"
+depends_on = ["sip-010-trait"]
+
+[contracts.usdc-token]
+path = "contracts/mocks/usdc-token.clar"
+clarity_version = 3
+epoch = "3.1"
+depends_on = ["sip-010-trait"]
+
+[contracts.pyth-mock]
+path = "contracts/mocks/pyth-mock.clar"
+clarity_version = 3
+epoch = "3.1"
+
+[contracts.bs-math]
+path = "contracts/bs-math.clar"
+clarity_version = 3
+epoch = "3.1"
+
+[contracts.oracle-adapter]
+path = "contracts/oracle-adapter.clar"
+clarity_version = 3
+epoch = "3.1"
+depends_on = ["pyth-mock"]
+
+[contracts.bcshare-token]
+path = "contracts/bcshare-token.clar"
+clarity_version = 3
+epoch = "3.1"
+depends_on = ["sip-010-trait"]
+
+[contracts.vault]
+path = "contracts/vault.clar"
+clarity_version = 3
+epoch = "3.1"
+depends_on = ["sip-010-trait", "sbtc-token", "usdc-token", "bs-math", "oracle-adapter", "bcshare-token"]

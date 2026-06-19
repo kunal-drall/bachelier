@@ -1,0 +1,22 @@
+{
+  "name": "bachelier",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Bachelier — peer-to-pool covered-call options vault on sBTC, on Stacks. On-chain fixed-point Black–Scholes pricing.",
+  "license": "Apache-2.0",
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "dev": "turbo run dev",
+    "check:contracts": "cd contracts && clarinet check"
+  },
+  "devDependencies": {
+    "turbo": "^2.5.0",
+    "typescript": "^5.8.0"
+  }
+}

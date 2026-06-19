@@ -1,0 +1,74 @@
+# Deploys the Bachelier contracts to Stacks TESTNET.
+#
+# Runs in CI because deployment needs open egress to the Stacks RPC + faucet.
+# The deployer wallet is GENERATED inside the run, faucet-funded, and pushed
+# back to the branch encrypted with .github/deploy-key.pub.pem (the matching
+# private key never enters the repo). The public deployment record and the
+# shared network config are committed back in the same push.
+#
+# Uses only GitHub-authored actions; pnpm comes from corepack.
+name: deploy-testnet
+
+on:
+  workflow_dispatch: {}
+  # the session's GitHub credential cannot dispatch workflows, so a push to
+  # this marker file is the programmatic trigger (workflow pushes never touch it)
+  push:
+    paths:
+      - ".deploy-testnet-trigger"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deploy-testnet
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Enable pnpm via corepack
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.33.0 --activate
+          pnpm --version
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Deploy contracts to Stacks testnet
+        working-directory: contracts
+        run: pnpm tsx scripts/deploy-testnet.ts
+
+      - name: Encrypt deployer wallet (testnet-only key)
+        run: |
+          openssl smime -encrypt -binary -aes-256-cbc -outform PEM \
+            -in contracts/settings/.testnet-deployer.json \
+            -out contracts/deployments/testnet-deployer.json.enc \
+            .github/deploy-key.pub.pem
+          echo "decrypt with: openssl smime -decrypt -binary -inform PEM -in testnet-deployer.json.enc -inkey <private-key.pem>"
+
+      - name: Record deployer in shared config
+        run: |
+          ADDR=$(node -p "require('./contracts/deployments/testnet-deployment.json').deployer")
+          echo "deployer: $ADDR"
+          sed -i "s/ST000000000000000000002AMW42H/$ADDR/g" packages/shared/src/networks.ts
+          sed -i "s/<DEPLOYER>/$ADDR/g" indexer/chainhooks/vault-print.testnet.json
+
+      - name: Push results back to the branch
+        run: |
+          git config user.name "kunal-drall"
+          git config user.email "kunaldrall29@gmail.com"
+          git add contracts/deployments/testnet-deployment.json \
+                  contracts/deployments/testnet-deployer.json.enc \
+                  packages/shared/src/networks.ts \
+                  indexer/chainhooks/vault-print.testnet.json
+          git commit -m "testnet: record deployed contracts + encrypted deployer wallet"
+          git push origin HEAD:${GITHUB_REF_NAME}

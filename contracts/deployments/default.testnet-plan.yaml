@@ -1,0 +1,97 @@
+# Testnet deployment plan TEMPLATE.
+#
+# Regenerate with your own deployer before use:
+#   1. cp settings/Testnet.toml.example settings/Testnet.toml
+#   2. put your mnemonic in settings/Testnet.toml (never commit it)
+#   3. clarinet deployments generate --testnet --medium-cost
+#   4. replace <DEPLOYER> below (or use the regenerated file) and keep the
+#      wiring batch (set-vault + set-tokens) at the end
+#   5. clarinet deployments apply --testnet
+#
+# Order matters: bs-math -> oracle-adapter -> bcshare-token -> vault, then
+# wiring. On testnet, point the vault at the real sBTC/USDC via set-tokens
+# BEFORE the first deposit, and swap oracle-adapter's inner call to the real
+# Pyth contract (see README "Oracle wiring").
+id: 0
+name: Testnet deployment
+network: testnet
+stacks-node: https://api.testnet.hiro.so
+bitcoin-node: http://blockstack:blockstacksystem@bitcoind.testnet.stacks.co:18332
+plan:
+  batches:
+  - id: 0
+    transactions:
+    - transaction-type: contract-publish
+      contract-name: sip-010-trait
+      expected-sender: <DEPLOYER>
+      cost: 10000
+      path: contracts/sip-010-trait.clar
+      anchor-block-only: true
+      clarity-version: 3
+    - transaction-type: contract-publish
+      contract-name: bs-math
+      expected-sender: <DEPLOYER>
+      cost: 80000
+      path: contracts/bs-math.clar
+      anchor-block-only: true
+      clarity-version: 3
+    - transaction-type: contract-publish
+      contract-name: pyth-mock
+      expected-sender: <DEPLOYER>
+      cost: 15000
+      path: contracts/mocks/pyth-mock.clar
+      anchor-block-only: true
+      clarity-version: 3
+    - transaction-type: contract-publish
+      contract-name: oracle-adapter
+      expected-sender: <DEPLOYER>
+      cost: 25000
+      path: contracts/oracle-adapter.clar
+      anchor-block-only: true
+      clarity-version: 3
+    - transaction-type: contract-publish
+      contract-name: bcshare-token
+      expected-sender: <DEPLOYER>
+      cost: 25000
+      path: contracts/bcshare-token.clar
+      anchor-block-only: true
+      clarity-version: 3
+    - transaction-type: contract-publish
+      contract-name: usdc-token
+      expected-sender: <DEPLOYER>
+      cost: 15000
+      path: contracts/mocks/usdc-token.clar
+      anchor-block-only: true
+      clarity-version: 3
+    - transaction-type: contract-publish
+      contract-name: sbtc-token
+      expected-sender: <DEPLOYER>
+      cost: 15000
+      path: contracts/mocks/sbtc-token.clar
+      anchor-block-only: true
+      clarity-version: 3
+    - transaction-type: contract-publish
+      contract-name: vault
+      expected-sender: <DEPLOYER>
+      cost: 300000
+      path: contracts/vault.clar
+      anchor-block-only: true
+      clarity-version: 3
+    epoch: '3.1'
+  - id: 1
+    transactions:
+    - transaction-type: contract-call
+      contract-id: <DEPLOYER>.bcshare-token
+      expected-sender: <DEPLOYER>
+      method: set-vault
+      parameters:
+      - "'<DEPLOYER>.vault"
+      cost: 10000
+    - transaction-type: contract-call
+      contract-id: <DEPLOYER>.pyth-mock
+      expected-sender: <DEPLOYER>
+      method: set-price-now
+      parameters:
+      - "10421000000000"
+      cost: 10000
+    epoch: '3.1'

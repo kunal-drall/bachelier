@@ -1,0 +1,23 @@
+{
+  "chain": "stacks",
+  "uuid": "bachelier-vault-print-testnet",
+  "name": "Bachelier vault print events (testnet)",
+  "version": 1,
+  "networks": {
+    "testnet": {
+      "if_this": {
+        "scope": "print_event",
+        "contract_identifier": "<DEPLOYER>.vault",
+        "contains": "e"
+      },
+      "then_that": {
+        "http_post": {
+          "url": "https://<your-indexer-host>/chainhook/events",
+          "authorization_header": "Bearer <CHAINHOOK_SECRET>"
+        }
+      },
+      "decode_clarity_values": true,
+      "start_block": 0
+    }
+  }
+}

@@ -1,0 +1,8 @@
+packages:
+  - "packages/*"
+  - "contracts"
+  - "db"
+  - "indexer"
+  - "api"
+  - "keeper"
+  - "web"

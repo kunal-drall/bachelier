@@ -1,0 +1,32 @@
+{
+  "name": "@bachelier/api",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Read-only REST API: indexed aggregation + Black-Scholes quotes",
+  "type": "module",
+  "scripts": {
+    "build": "tsc --noEmit",
+    "lint": "tsc --noEmit",
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@bachelier/db": "workspace:*",
+    "@bachelier/shared": "workspace:*",
+    "@fastify/cors": "^11.0.0",
+    "@fastify/rate-limit": "^10.3.0",
+    "@stacks/network": "^7.2.0",
+    "@stacks/transactions": "^7.2.0",
+    "drizzle-orm": "^0.44.0",
+    "fastify": "^5.3.0",
+    "tsx": "^4.20.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.3.0",
+    "@types/node": "^22.19.0",
+    "typescript": "^5.8.0",
+    "vitest": "^3.2.0"
+  }
+}
