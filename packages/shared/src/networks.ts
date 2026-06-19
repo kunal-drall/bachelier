@@ -70,7 +70,7 @@ export const NETWORKS: Record<BachelierNetwork, NetworkConfig> = {
     stacksApiUrl: "https://api.testnet.hiro.so",
     // Filled in at deploy time (see deployments/default.testnet-plan.yaml).
     // Override via env BACHELIER_DEPLOYER for ad-hoc deployments.
-    deployer: env("BACHELIER_DEPLOYER") ?? "ST000000000000000000002AMW42H",
+    deployer: env("BACHELIER_DEPLOYER") ?? "ST1QN0P1MB429DHV28KT68F80621FHE4NE880CBZK",
     contracts: {
       bsMath: addr("bs-math"),
       oracleAdapter: addr("oracle-adapter"),
@@ -116,7 +116,7 @@ export const NETWORKS: Record<BachelierNetwork, NetworkConfig> = {
 };
 
 function addr(contract: string): string {
-  const deployer = env("BACHELIER_DEPLOYER") ?? "ST000000000000000000002AMW42H";
+  const deployer = env("BACHELIER_DEPLOYER") ?? "ST1QN0P1MB429DHV28KT68F80621FHE4NE880CBZK";
   return `${deployer}.${contract}`;
 }
 

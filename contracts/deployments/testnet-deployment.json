@@ -1,0 +1,37 @@
+{
+  "network": "testnet",
+  "stacksApi": "https://api.testnet.hiro.so",
+  "deployer": "ST1QN0P1MB429DHV28KT68F80621FHE4NE880CBZK",
+  "deployedAt": "2026-06-19T06:01:40.597Z",
+  "contracts": {
+    "sip-010-trait": "ST1QN0P1MB429DHV28KT68F80621FHE4NE880CBZK.sip-010-trait",
+    "bs-math": "ST1QN0P1MB429DHV28KT68F80621FHE4NE880CBZK.bs-math",
+    "pyth-mock": "ST1QN0P1MB429DHV28KT68F80621FHE4NE880CBZK.pyth-mock",
+    "oracle-adapter": "ST1QN0P1MB429DHV28KT68F80621FHE4NE880CBZK.oracle-adapter",
+    "bcshare-token": "ST1QN0P1MB429DHV28KT68F80621FHE4NE880CBZK.bcshare-token",
+    "sbtc-token": "ST1QN0P1MB429DHV28KT68F80621FHE4NE880CBZK.sbtc-token",
+    "usdc-token": "ST1QN0P1MB429DHV28KT68F80621FHE4NE880CBZK.usdc-token",
+    "vault": "ST1QN0P1MB429DHV28KT68F80621FHE4NE880CBZK.vault"
+  },
+  "deployTxs": {
+    "sip-010-trait": "0x860ac4293675f2d6779a26a4fd584f9594ccb1a1241ade0df51063c5ad8b80da",
+    "bs-math": "0x09f15ee7d9cb75f59f7cb17d804c8aa716bad23f64e279c4dea43135bc547c7d",
+    "pyth-mock": "0xe3c2bc499d7e310841bf17a843820500ce2a19d27795b828e30428a272e9b33d",
+    "oracle-adapter": "0xbeffb3332bb74be330b814af648107ff278b68a5f7dfdb737cb8d052ad7aff7e",
+    "bcshare-token": "0x143c2d00f0edd76ca4d4d515b6e45806ab8c285805ad4f4b845431886fc9b343",
+    "sbtc-token": "0x1f78757a445bd5d7d5f721426fc5edc8fb388a19476272fe9b8d212a6708e5fe",
+    "usdc-token": "0xbbe8a4fbf5cd0b893c4e9b7913815798e992c2f826eada144bc7b8ad76e70c84",
+    "vault": "0x6b039153d8cb19e18caff989001171c9c0f222a0f6ed49ecc1a039a9969c10db"
+  },
+  "wiring": {
+    "set-vault": "0xd38fdcb083e20894a968effe0d493bf59e0d90d8215d914c2ef90fc587f456cc",
+    "set-max-age": "0x949d30ed575366602da34e7609a883da1116c236c8154c804dbd17b05b93f566",
+    "set-price": "0xb17887e3b8f891325f454ba973aaf96f6e69b6b36bfd29ee469794690f6315b4",
+    "start-round": "0x1d0c32d9a6dcebe97d9872dc1f0a26c2c5e0f189116c7b837115ea7d4a376f1f"
+  },
+  "round1": {
+    "strike": "6894140000000",
+    "expiry": 1782453687
+  },
+  "btcUsdAtDeploy": 62674
+}

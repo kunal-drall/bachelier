@@ -7,7 +7,7 @@
     "testnet": {
       "if_this": {
         "scope": "print_event",
-        "contract_identifier": "<DEPLOYER>.vault",
+        "contract_identifier": "ST1QN0P1MB429DHV28KT68F80621FHE4NE880CBZK.vault",
         "contains": "e"
       },
       "then_that": {
